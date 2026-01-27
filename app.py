@@ -2,6 +2,8 @@
 from flask import Flask, request
 # import os allows for python to talk to my personal mac (like where files are stored)
 import os
+# import base 64 allows for the conversion of binary to actual text (image to json transfer for api)
+import base64
 
 # set up for flask object, name part is just telling flask object its location on the computer?
 fl = Flask(__name__)
@@ -27,26 +29,28 @@ def process_image() :
     
     # check to make sure something was actually uploaded, even if the category of image was right (make sure image box isnt empty)
     # get the value of the stored files at image key, then get its name and ensure its not empty (empty would mean nothing uploaded)
-    filename = request.files["image"].filename
-    if filename == "" : 
+    img = request.files["image"]
+    if img.filename == "" : 
         return "did not actually upload an image"
     
+    # read the img file as binary bits
+    img_binary = img.read()
+    # convert the binary to base 64 text
+    # first we convert to bytes of base 64 (encode), which then go to the ascii table and map to text (decode)
+    # this now has base 64 long string of title, dimensions, rgb values for each pixel etc
+    img_base64 = base64.b64encode(img_binary).decode("utf-8")
+
     # use os import to store the file path from our destination to the image we recieved
     # actually store the image (not its name) to my computer using this filepath
-    path = os.path.join(FOLDER_NAME, filename)
+    path = os.path.join(FOLDER_NAME, img.filename)
     request.files["image"].save(path)
 
-    # printing and return confirmation (return to terminal, printing here)
-    print(f"success, {filename} uploaded to {FOLDER_NAME}")
-    return f"{filename} uploaded correctly"
+    # printing confirmation to python console
+    print(f"binary: {img_binary}")
+    print(f"base64: {img_base64}")
 
-    # # brute force text method to read a string from the server
-    # words = request.get_data(as_text = True)
-
-    # # print statements go to back end python window
-    # print(words)
-    # # return statements go back to the user/terminal
-    # return "message recieved"
+    # returning message to go to apple terminal
+    return "success. image uploaded and parsed."
 
 # main method
 # name is a variable assigned to the file and how it is being used
