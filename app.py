@@ -12,7 +12,7 @@ from google.genai import types
 ## API, FLASK, AND FILE STORING DECLARATIONS
 
 # set up gemini client (my connection to the gemini api)
-gem_client = genai.Client(api_key = "AIzaSyAeU0ZVhcSPVzWuPketz2AwUP2aBt3egFg")
+gem_client = genai.Client(api_key = "CONSTANT")
 # set up for flask object, name part is just telling flask object its location on the computer?
 fl = Flask(__name__)
 # creating a folder to store the images in; caps indicate the variable is a constant
