@@ -4,6 +4,8 @@
 from flask import Flask, request
 # import os allows for python to talk to my personal mac (like where files are stored), but this is entirely optional for the project
 import os
+# import to get access to the .env
+from dotenv import load_dotenv
 # import for gemini api
 from google import genai
 # import types (makes container for the image to be passed through (packages it)
@@ -11,8 +13,11 @@ from google.genai import types
 
 ## API, FLASK, AND FILE STORING DECLARATIONS
 
+# load the dotenv variables, then get the key and store it
+load_dotenv()
+api = os.getenv("GEMINI_KEY")
 # set up gemini client (my connection to the gemini api)
-gem_client = genai.Client(api_key = "CONSTANT")
+gem_client = genai.Client(api_key = api)
 # set up for flask object, name part is just telling flask object its location on the computer?
 fl = Flask(__name__)
 # creating a folder to store the images in; caps indicate the variable is a constant

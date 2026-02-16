@@ -1,0 +1,10 @@
+# virtual environment stuff
+.venv/
+venv/
+env/
+
+# gemini api key
+.env
+
+# operating system stuff
+.DS_Store
