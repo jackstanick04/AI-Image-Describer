@@ -16,10 +16,32 @@ function App() {
     const image = evt.target.files[0];
     // set the file variable to this image
     setFile(image);
-    // confirmation it worked
-    console.log("Yay");
 
   }
+
+  // function to send the image to python; async makes the entire function wait until the await to refresh the page (because it takes some time to get the gemini response)
+  const send = async() => {
+
+    // the image is a bunch of binary, but needs to be packaged as a form to be sent to flask
+    const formData = new FormData();
+    // just adds an image to be sent in the form data (form data can hold many files)
+    formData.append('image', file);
+
+    // now we send the forms to flask and store the response (argument is the local server where my flask is running, and then the upload)
+    // await means dont run more code until we get the response from flask
+    const fromFlask = await fetch('http://localhost:5001/upload', 
+      {
+        method: 'POST',
+        body: formData
+      });
+
+    // the data from flask contains a lot of info and is unorganized, so we convert to json, then only take the raw text
+    // again dont run code until this step happens (await)
+    const gemText = await fromFlask.json();
+    // output to console; description is the actual text we want in the json
+    console.log(gemText.description)
+
+  };
 
   // return portion is the html (really jsx) code that will be reran to rerender the website
   return (
@@ -36,6 +58,9 @@ function App() {
         onChange={fileUpload} 
         accept="image/*" 
       />
+
+      {/* button to send the image to the python code using the send function */}
+      <button onClick = {send}>Submit</button>
 
     </div>
 

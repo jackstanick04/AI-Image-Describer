@@ -1,7 +1,9 @@
 ## IMPORT STATEMENTS
 
-# import flask object and request method (req method allows to store data that is imported)
-from flask import Flask, request
+# import flask object and request method (req method allows to store data that is imported), and jsonify (to send the return in the right format)
+from flask import Flask, request, jsonify
+# import CORS which allows for flask to talk to the react port
+from flask_cors import CORS
 # import os allows for python to talk to my personal mac (like where files are stored), but this is entirely optional for the project
 import os
 # import to get access to the .env
@@ -20,6 +22,8 @@ api = os.getenv("GEMINI_KEY")
 gem_client = genai.Client(api_key = api)
 # set up for flask object, name part is just telling flask object its location on the computer?
 fl = Flask(__name__)
+# CORS allows it to read from other ports
+CORS(fl)
 # creating a folder to store the images in; caps indicate the variable is a constant
 FOLDER_NAME = "image_uploads"
 # check if the folder exists, and if not, make it (need .path, but logically if it doesn't exist then a path wouldn't exist either)
@@ -30,7 +34,7 @@ if not os.path.exists(FOLDER_NAME) :
 
 # decorator 
 # route checks the url, if it ends in image (can be any word) and a post request, then call decorator
-@fl.route("/image", methods = ["POST"])
+@fl.route("/upload", methods = ["POST"])
 # python function we want to be called when decorator works (main program)
 def process_image() :
 
@@ -50,6 +54,8 @@ def process_image() :
 
     # read the img file as binary bits
     img_binary = img.read()
+    # reset the pointer back to beginning of the image so the filepath can be saved
+    img.seek(0)
     # use os import to store the file path from our destination to the image we recieved
     # actually store the image (not its name) to my computer using this filepath
     path = os.path.join(FOLDER_NAME, img.filename)
@@ -82,8 +88,8 @@ def process_image() :
 
     # printing confirmation to python console
     print(gem_text)
-    # returning message to go to apple terminal
-    return "success. image uploaded and parsed."
+    # returning json package with the response to react (description is what react is looking for)
+    return jsonify({"description" : gem_text})
 
 ## MAIN METHOD
 
@@ -92,4 +98,5 @@ def process_image() :
 # thus, this main method only gets ran (server only set up) when running this file, not importing it
 if __name__ == "__main__" : 
     # start server, and restart the server every time I refresh
-    fl.run(debug = True)
+    # need empty server of 5001
+    fl.run(debug = True, port = 5001)
