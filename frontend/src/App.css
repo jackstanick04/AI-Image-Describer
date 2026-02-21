@@ -1,0 +1,56 @@
+/* FILLER STYLING (SPOTIFY THEME) except for the sizing stuff*/
+
+
+
+/* layout of general program, flexing them into a line, then making it vertical, and centering it horizontally */
+.full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #121212;
+}
+
+/* .title {
+
+} */
+
+/* the general button styling and spacing */
+/* flex them in a line, add some gaps and margins between them and title */
+.buttons {
+    display: flex;
+    gap: 200px;
+    margin-bottom: 2vw;
+}
+
+/* actual style for each specific button */
+.upload {
+    background-color: #1DB954; 
+    color: white;
+    border: none;
+    border-radius: 500px;     
+    font-weight: bold;
+    cursor: pointer;
+} 
+
+.submit {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 20px;     
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* customizing the centered width, and then auto changing the height to fill it */
+.imagePreview {
+    width: 25vw;
+    margin-bottom: 1vw;
+}
+
+.output {
+    width: 70vw;
+    background-color: #181818; 
+    border-radius: 12px;
+    padding: 20px;
+    color: #b3b3b3;
+} 

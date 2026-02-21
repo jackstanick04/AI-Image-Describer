@@ -1,15 +1,18 @@
 // import react libraries, and specifically the use state
 // use state basicallly allows react to remmeber the values of variables in bewteen runs and page refreshes
 import React, { useState } from 'react';
+// import the styles
+import './App.css';
 
 // create function that will be ran every time the page is rendered and updated
 function App() {
 
   // declaring a variable to store the file, declaring a function that is called to update the variable, and then setting the variable originally to null
   const [file, setFile] = useState(null);
-  // variables to check if we are loading (waiting for the gemini response) and store the actual gemini response
+  // variables to check if we are loading (waiting for the gemini response) and store the actual gemini response, as well as the image url for preview
   const [textDescription, setText] = useState("");
   const [loading, setLoad] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
 
   // this is the function that we run when a file is uploaded
   // lot of syntax, but the "evt" is the object pointing to what we uploaded, where it was in the html, etc. (everything related to the change)
@@ -19,6 +22,11 @@ function App() {
     const image = evt.target.files[0];
     // set the file variable to this image
     setFile(image);
+    // this takes the local image and gives it a url to be accessed later (nothing too special)
+    setImagePreview(URL.createObjectURL(image));
+
+    // update the text description so that the page does not still output the first image's text while loading
+    setText("New image uploaded")
 
   }
 
@@ -54,37 +62,40 @@ function App() {
   // return portion is the html (really jsx) code that will be reran to rerender the website
   return (
 
-    // remember slight html background, divs are just sections
-    <div>
+    // remember our slight html background, divs are just sections
+    <div className = "full">
 
-      {/* upload section */}
-      <div>
         {/* just a title */}
-        <h1>Image Describer</h1>
+        <h1 className = "title">Image Describer</h1>
       
-        {/* this is the upload, we are taking in a file (only image types like png) and then when this happens we are calling the fileupload function above */}
-        <input 
-          type="file" 
-          onChange={fileUpload} 
-          accept="image/*" 
-        />
+        {/* div to hold the two buttons vertically together, and each button gets its own class as well */}
+        <div className = "buttons">
+          {/* this is the upload, we are taking in a file (only image types like png) and then when this happens we are calling the fileupload function above */}
+          <input 
+            type="file" 
+            onChange={fileUpload} 
+            accept="image/*" 
+            className = "upload"
+          />
+          {/* button to send the image to the python code using the send function */}
+          <button onClick = {send} className = "submit">Submit</button>
+        </div>
 
-        {/* button to send the image to the python code using the send function */}
-        <button onClick = {send}>Submit</button>
-      
-      </div>
+        {/* image preview sestion, happens right after the image is uploaded (before submit) */}
+        {/* if the image preview has in image, execute this html */}
+        {imagePreview && 
+        (
+          <div>
+            <img src = {imagePreview}  className = "imagePreview"/>
+          </div>
+        )}
 
-      {/* output section */}
-      <div>
-
-        {/* short circuit ifs for the loading text or text output depending on the right state; empty text counts as false */}
-
-        {loading && <p>loading Gemini</p>}
-
-        {textDescription && <p>{textDescription}</p>}
-
-
-      </div>
+        {/* div to hold all the text output */}
+        <div className = "output">
+          {/* short circuit ifs for the loading text or text output depending on the right state; empty text counts as false */}
+          {loading && <p>loading Gemini</p>}
+          {textDescription && <p>{textDescription}</p>}
+        </div>
 
     </div>
 
