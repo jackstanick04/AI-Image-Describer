@@ -1,56 +1,94 @@
-/* FILLER STYLING (SPOTIFY THEME) except for the sizing stuff*/
+/* nothing too crazy, lots of similar stuff to when I did this in high school */
 
+/* color the entire page, not just where our components are */
+html, body {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #121212;
+    /* this removes scrolling */
+    overflow: hidden;
+    margin: 0px;
+}
 
-
-/* layout of general program, flexing them into a line, then making it vertical, and centering it horizontally */
+/* layout of general program, flexing them into a line, then making it vertical, and centering it horizontally; adding padding so it's not on edge of screen */
 .full {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #121212;
+    padding: 10px;
 }
 
-/* .title {
-
-} */
+/* title tag, nothing much */
+.title {
+    height: 7.5vh;
+    display: flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: #F49AC2;
+    text-decoration: underline;
+} 
 
 /* the general button styling and spacing */
 /* flex them in a line, add some gaps and margins between them and title */
 .buttons {
     display: flex;
-    gap: 200px;
-    margin-bottom: 2vw;
+    gap: 250px;
+    height: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Inter', sans-serif;
 }
 
-/* actual style for each specific button */
-.upload {
-    background-color: #1DB954; 
+/* actual style for each specific button; needs display and centering for the text */
+.uploadLabel {
+    background-color: #87CEFA;; 
     color: white;
     border: none;
     border-radius: 500px;     
     font-weight: bold;
     cursor: pointer;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
 } 
 
+/* hide the actual input logic */
+.uploadHide {
+    display: none;
+}
+
+/* needs display and centering for the text */
 .submit {
-    background-color: #1DB954;
+    background-color: #4682B4;
     color: white;
     border: none;
     border-radius: 20px;     
     font-weight: bold;
+    width: 125px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
 }
 
 /* customizing the centered width, and then auto changing the height to fill it */
 .imagePreview {
-    width: 25vw;
-    margin-bottom: 1vw;
+    height: 45vh;
+    padding-bottom: 2.5vw;
 }
 
+/* text output, nothing too complex */
 .output {
     width: 70vw;
+    height: 20vh;
     background-color: #181818; 
     border-radius: 12px;
-    padding: 20px;
-    color: #b3b3b3;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #E0E0E0;
+    font-family: Georgia, serif;
 } 

@@ -77,7 +77,7 @@ def process_image() :
     full_resp = gem_client.models.generate_content(
         model = "gemini-3-flash-preview",
         contents = [
-            "Please describe what you see in this image.",
+            "Please describe what you see in this image, focusing more on the main components than background. Please keep the response between 175 and 200 words.",
             proc_image
         ]
     )

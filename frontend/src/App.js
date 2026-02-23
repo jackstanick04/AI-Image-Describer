@@ -33,6 +33,11 @@ function App() {
   // function to send the image to python; async makes the entire function wait until the await to refresh the page (because it takes some time to get the gemini response)
   const send = async() => {
 
+    // check if a file was actually uploaded
+    if (!imagePreview) {
+      return;
+    }
+
     // after submitting image, set to loading state and clear old text
     setLoad(true);
     setText("");
@@ -70,13 +75,20 @@ function App() {
       
         {/* div to hold the two buttons vertically together, and each button gets its own class as well */}
         <div className = "buttons">
+
           {/* this is the upload, we are taking in a file (only image types like png) and then when this happens we are calling the fileupload function above */}
+          {/* input tag handels the logic, the label is just aesthetic. html for means when clicked, find the button with the same id */}
+          {/* id is for the html for and class is for styling*/}
           <input 
-            type="file" 
-            onChange={fileUpload} 
-            accept="image/*" 
-            className = "upload"
+            type ="file" 
+            onChange ={fileUpload} 
+            accept ="image/*" 
+            className = "uploadHide"
+            id = "fileUpload"
           />
+
+          <label htmlFor = "fileUpload" className = "uploadLabel">Choose Image</label>
+
           {/* button to send the image to the python code using the send function */}
           <button onClick = {send} className = "submit">Submit</button>
         </div>
@@ -93,8 +105,14 @@ function App() {
         {/* div to hold all the text output */}
         <div className = "output">
           {/* short circuit ifs for the loading text or text output depending on the right state; empty text counts as false */}
-          {loading && <p>loading Gemini</p>}
-          {textDescription && <p>{textDescription}</p>}
+          {loading && <p>Loading Gemini. May take a few seconds...</p>}
+
+          {/* ternary based on if there is text or not, and then if also not loading print the placeholder */}
+          {textDescription ? (
+            <p>{textDescription}</p>
+          ) : (
+            !loading && <p>Upload an image and then submit...</p>
+          )}
         </div>
 
     </div>
