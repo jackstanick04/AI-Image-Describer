@@ -1,10 +1,14 @@
-# virtual environment stuff
+# virtual environment stuff and python bytecode
 .venv/
 venv/
 env/
+__pycache__/
 
 # gemini api key
 .env
 
 # operating system stuff
 .DS_Storeimage_uploads/
+.DS_Store
+
+
