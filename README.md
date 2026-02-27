@@ -10,3 +10,6 @@ To run:
 | clone repo, and enter directory
 | install python libraries and start flask server (pip install -r requirements.txt)
 | start the front end server (npm start (when in front end directory))
+
+Future Improvements:
+Interactive chat window to question and laern about the image
