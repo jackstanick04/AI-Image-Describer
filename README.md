@@ -11,5 +11,5 @@ To run:
 | install python libraries and start flask server (pip install -r requirements.txt)
 | start the frontend server (npm start (when in frontend directory))
 
-Future Improvements:
+Potential future improvements:
 Interactive chat window to question and learn about the image
