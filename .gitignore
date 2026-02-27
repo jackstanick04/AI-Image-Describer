@@ -6,5 +6,6 @@ env/
 # gemini api key
 .env
 
-# operating system stuff
+# operating system stuff and image folder
 .DS_Storeimage_uploads/
+image_uploads/
